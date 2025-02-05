@@ -1,0 +1,341 @@
+/* Reset & Basic Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+} 
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, rgba(19, 202, 226, 1) 0%, rgba(0, 123, 255, 1) 100%);
+  /* background-color: #FFE53B;
+background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%); */
+
+  color: #fff;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  transition: background 0.5s ease-in-out;
+}
+
+#bar{
+  margin: 15px;
+  margin-bottom: -15px;
+  display: inline-block;
+  background-color: rgba(9, 9, 9, 0.411);
+  padding: 5px;
+  border-radius: 20px;
+  font-size: 16px;
+  /* font-weight: bold; */
+  font-family: monospace;
+}
+
+#logo {
+  display: block;
+  margin: 0;
+  margin-top: -20px;
+  margin-right: -5px;
+  float: right;
+}
+
+
+#logo>img{
+  width: 100px;
+  height: 100px;
+}
+/* Clock */
+.clock {
+  text-align: center;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 10px;
+  max-width: 600px;
+  margin-bottom: 20px;
+  font-family: monospace;
+  color: rgb(245, 239, 188);
+  font-weight: bold;
+  font-size: 4rem;
+  text-shadow: #0b0b0b 2px 2px 2px;
+}
+
+.clock span.am-pm {
+  font-size: 1.2rem;
+  vertical-align: unset;
+}
+
+/* Search Section */
+.search-container {
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+.search-bar {
+  display: flex;
+}
+.search-bar input {
+  flex: 1;
+  color: #fff;
+  padding: 10px;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0.663);
+  border: none;
+  border-radius: 15px 0 0 15px;
+}
+.search-bar button {
+  padding: 10px 15px;
+  background-color: #e2cd14;
+  color: #fff;
+  border:none;
+  border-radius: 0 15px 15px 0;
+  cursor: pointer;
+}
+
+/* Engine Row */
+.engine-settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 10px;
+  margin-bottom: 60px;
+}
+.engine-container {
+  display: flex;
+  gap: 10px;
+}
+.engine-container button {
+  padding: 5px;
+  background-color: #0b0b0b;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  color: #fff;
+}
+.engine-container button.selected {
+  background-color: #f1d81e;
+  color: black;
+  border-bottom: 4px solid black;
+}
+.engine-container img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Settings Panel */
+.settings-btn {
+  background: black;
+  border: none;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.engine-settings {
+  margin-top: 10px;
+}
+.engine-settings input {
+  padding: 5px;
+  margin: 3px;
+  border: none;
+  border-radius: 3px;
+}
+.engine-settings button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Hide elements */
+.hidden {
+  display: none;
+}
+
+/* Tabs for Folders */
+.tab-container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  max-width: 800px;
+  margin: 20px auto;
+  width: 90%;
+}
+.tab-container button {
+  padding: 8px 12px;
+  background-color: #131313;
+  color: white;
+  border: none;
+  margin: 2px;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+  
+}
+.tab-container button.active {
+  background-color: #f1d81e;
+  color: black;
+  transform: translateY(-3px);
+  border-bottom: 3px solid black;
+}
+.add-tab-btn {
+  background-color: #007bff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* New Folder Input */
+.new-folder-container {
+  text-align: center;
+  margin-top: 10px;
+}
+.new-folder-container input {
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+.new-folder-container button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Bookmark/Workspace Content Area */
+
+.bookmark-content {
+  background-color: rgba(9, 9, 9, 0.496); /* 20% transparency */
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  margin-top: -20px;
+  min-height: 300px;
+  text-align: left;
+}
+
+.bookmark-item {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0);
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+}
+
+.bookmark-item img {
+  width: 40px;
+  height: 40px;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.bookmark-item span {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.8rem;
+}
+
+/* Add Bookmark Button (Rounded Icon) */
+.add-bookmark-btn {
+
+  font-size: 1.8rem;
+  border: none;
+  display: inline-flex;
+  background-color: rgba(0, 123, 255, 0.6); /* 60% transparent blue */
+  color: #fff;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-top: 10px;
+}
+
+/* Wallpaper Button */
+.wallpaper-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.8rem;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+.wallpaper-btn:hover {
+  opacity: 1;
+}
+
+/* Inline Popup for Adding Bookmark */
+.bookmark-popup {
+  position: absolute;
+  background-color: #222;
+  border: 1px solid #555;
+  border-radius: 5px;
+  padding: 10px;
+  width: 220px;
+  z-index: 1000;
+}
+.bookmark-popup input {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 5px;
+  border: none;
+  border-radius: 3px;
+}
+.bookmark-popup button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+
+/* Context Menu */
+.context-menu {
+  position: absolute;
+  background-color: #222;
+  border: 1px solid #555;
+  border-radius: 3px;
+  z-index: 1000;
+}
+.context-menu button {
+  display: block;
+  width: 100%;
+  padding: 5px 10px;
+  background: none;
+  border: none;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+}
+.context-menu button:hover {
+  background-color: #007bff;
+}
+
+

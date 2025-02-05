@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marq - Bookmark Manager</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="q.png" type="image/x-icon">
+</head>
+<body> 
+<div>
+  <div id="bar">Hey, Let's Explore..</div>
+  <div id="logo"><img src="Mar.png" alt="logo" title="Welcome to MarQ"></div>
+</div>
+  <!-- Digital Clock -->
+  <div id="clock" class="clock"></div>
+
+  <!-- Search Section -->
+  <div class="search-container">
+    <div class="search-bar">
+      <input type="text" id="query" placeholder="Search or type URL..." />
+      <button id="searchBtn">🔍</button>
+    </div>
+    <div class="engine-settings-row">
+      <div class="engine-container">
+        <!-- Search engines will be rendered here -->
+      </div>
+      <button id="settingsBtn" class="settings-btn" title="Manage search engines">⚙️</button>
+    </div>
+    <div id="engineSettings" class="engine-settings hidden">
+      <input type="text" id="newEngineName" placeholder="Engine Name" />
+      <input type="text" id="newEngineUrl" placeholder="Engine URL (use {query})" />
+      <button id="addEngineBtn">Add Engine</button>
+    </div>
+  </div>
+
+  <!-- Folder Tabs -->
+  <div class="tab-container">
+    <div id="tabs">
+      <!-- Folder tabs will be rendered here -->
+    </div>
+    <button id="addTabBtn" class="add-tab-btn" title="Add new folder">➕</button>
+  </div>
+  <div id="newFolderContainer" class="new-folder-container hidden">
+    <input type="text" id="newFolderName" placeholder="Folder Name" />
+    <button id="createFolderBtn">Create Folder</button>
+    <button id="cancelFolderBtn">Cancel</button>
+  </div>
+
+  <!-- Bookmark/Workspace Content Area -->
+  <div id="bookmarkContent" class="bookmark-content">
+    <!-- Bookmarks or Tools (if Tools tab is active) will be rendered here -->
+  </div>
+
+  <!-- Wallpaper Change Button & Hidden File Input -->
+  <button id="changeWallpaperBtn" class="wallpaper-btn" title="Click to change wallpaper">🧱</button>
+  <input type="file" id="wallpaperInput" accept="image/*" class="hidden">
+
+
+  <!-- Context Menu -->
+  <div id="contextMenu" class="context-menu hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
