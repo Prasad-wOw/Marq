@@ -9,13 +9,13 @@
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, rgba(19, 202, 226, 1) 0%, rgba(0, 123, 255, 1) 100%);
+    background: url('wallpaper3.jpg');
     color: #fff;
     min-height: 100vh;
     background-size: cover;
     background-position: center;
-    /* background-attachment: fixed; */
-    /* background-repeat: no-repeat; */
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     overflow: auto;
   }
 
