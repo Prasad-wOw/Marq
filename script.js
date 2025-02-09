@@ -208,6 +208,12 @@ const preloadedWallpapers = [
       }
     }
   });
+  // Sync custom engines immediately on load
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      syncUserData(user);
+    }
+  });
   
   /* -------------------- Context Menu -------------------- */
   const contextMenuEl = document.getElementById("contextMenu");
