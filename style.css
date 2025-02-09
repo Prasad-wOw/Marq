@@ -112,13 +112,13 @@
 .engine-settings-row {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 5px;
     margin-top: 10px;
     margin-bottom: 60px;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    overflow-x: auto;
     width: 100%;
+    white-space: nowrap;
 }
 
 .engine-settings-row::-webkit-scrollbar { 
