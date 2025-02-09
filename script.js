@@ -110,15 +110,15 @@ function renderTodoList() {
 //   }
 // });
 
-document.getElementById("addTabBtn").addEventListener("click", () => {
-  const name = prompt("Enter folder name:");
-  if (name) {
-      const newFolder = { id: Date.now(), name, bookmarks: [] };
-      userData.folders.push(newFolder);
-      saveState("marq_userData", userData);
-      renderTabs();
-  }
-});
+// document.getElementById("addTabBtn").addEventListener("click", () => {
+//   const name = prompt("Enter folder name:");
+//   if (name) {
+//       const newFolder = { id: Date.now(), name, bookmarks: [] };
+//       userData.folders.push(newFolder);
+//       saveState("marq_userData", userData);
+//       renderTabs();
+//   }
+// });
 
 /* -------------------- Authentication Handling -------------------- */
 auth.onAuthStateChanged(user => {
