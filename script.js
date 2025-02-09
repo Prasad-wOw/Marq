@@ -1,3 +1,138 @@
+// Full Optimized script.js with Sync, Storage & UI Improvements
+
+/* -------------------- Helper Functions -------------------- */
+function saveState(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+  saveToCloudDebounced();
+}
+
+function loadState(key, defaultValue) {
+  const data = localStorage.getItem(key);
+  return data ? JSON.parse(data) : defaultValue;
+}
+
+function debounce(func, delay) {
+  let timer;
+  return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => func(...args), delay);
+  };
+}
+
+/* -------------------- Firebase Sync -------------------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyBQDnT-C5dYL3abyWUqxvSRBneb7wnANlU",
+  authDomain: "marq-bookmark-manager.firebaseapp.com",
+  projectId: "marq-bookmark-manager",
+  storageBucket: "marq-bookmark-manager.firebasestorage.app",
+  messagingSenderId: "558718436878",
+  appId: "1:558718436878:web:a4324c4e81ee0bfea55e5f",
+  measurementId: "G-LQ9P67E5GV"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+let userData = loadState("marq_userData", { folders: [], searchEngines: [], todoTasks: [], wallpaper: "" });
+
+function syncUserData(user) {
+  const userRef = db.collection("users").doc(user.uid);
+  userRef.get().then(doc => {
+      if (doc.exists) {
+          userData = doc.data();
+          saveState("marq_userData", userData);
+          renderAll();
+      } else {
+          userRef.set(userData);
+      }
+  });
+}
+
+const saveToCloudDebounced = debounce(() => {
+  const user = auth.currentUser;
+  if (user) {
+      db.collection("users").doc(user.uid).set(userData);
+  }
+}, 2000);
+
+/* -------------------- Render Functions -------------------- */
+function renderAll() {
+  renderTabs();
+  renderBookmarks();
+  renderEngines();
+  renderTodoList();
+  applyWallpaper();
+}
+
+function renderTabs() {
+  const tabsContainer = document.getElementById("tabs");
+  tabsContainer.innerHTML = "";
+  userData.folders.forEach(folder => {
+      const tab = document.createElement("button");
+      tab.textContent = folder.name;
+      tab.onclick = () => {
+          userData.activeFolderId = folder.id;
+          saveState("marq_userData", userData);
+          renderBookmarks();
+      };
+      tabsContainer.appendChild(tab);
+  });
+}
+
+function renderBookmarks() {
+  const folder = userData.folders.find(f => f.id === userData.activeFolderId);
+  const container = document.getElementById("bookmarkContent");
+  container.innerHTML = folder ? folder.bookmarks.map(bm => `<div>${bm.name}</div>`).join('') : "";
+}
+
+function renderEngines() {
+  const container = document.querySelector(".engine-container");
+  container.innerHTML = userData.searchEngines.map(engine => `<button>${engine.name}</button>`).join('');
+}
+
+function renderTodoList() {
+  const container = document.getElementById("todoItems");
+  container.innerHTML = userData.todoTasks.map(task => `<li>${task.text}</li>`).join('');
+}
+
+/* -------------------- UI Features -------------------- */
+// function applyWallpaper() {
+//   if (userData.wallpaper) {
+//       document.body.style.backgroundImage = `url(${userData.wallpaper})`;
+//   }
+// }
+
+// document.getElementById("changeWallpaperBtn").addEventListener("click", () => {
+//   const url = prompt("Enter wallpaper URL:");
+//   if (url) {
+//       userData.wallpaper = url;
+//       saveState("marq_userData", userData);
+//       applyWallpaper();
+//   }
+// });
+
+document.getElementById("addTabBtn").addEventListener("click", () => {
+  const name = prompt("Enter folder name:");
+  if (name) {
+      const newFolder = { id: Date.now(), name, bookmarks: [] };
+      userData.folders.push(newFolder);
+      saveState("marq_userData", userData);
+      renderTabs();
+  }
+});
+
+/* -------------------- Authentication Handling -------------------- */
+auth.onAuthStateChanged(user => {
+  if (user) {
+      syncUserData(user);
+      document.getElementById("userIcon").innerHTML = `<img src="${user.photoURL || 'user.svg'}" style="width:30px; height:30px; border-radius:50%">`;
+  } else {
+      userData = { folders: [], searchEngines: [], todoTasks: [], wallpaper: "" };
+      saveState("marq_userData", userData);
+      renderAll();
+  }
+});
+
+
 /* -------------------- Helper Functions -------------------- */
 function saveState(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
@@ -142,7 +277,6 @@ const preloadedWallpapers = [
   ];
   let customEngines = loadState("marq_customEngines", []);
   let selectedEngine = defaultEngines[0];
-
   function renderEngines() {
     const container = document.querySelector(".engine-container");
     container.innerHTML = "";
@@ -165,31 +299,25 @@ const preloadedWallpapers = [
       container.appendChild(btn);
     });
   }
-
   renderEngines();
-
   document.getElementById("searchBtn").addEventListener("click", () => {
     const query = document.getElementById("query").value;
     if (query) window.open(selectedEngine.url + encodeURIComponent(query), "_blank");
   });
-
   document.getElementById("query").addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       const query = document.getElementById("query").value;
       if (query) window.open(selectedEngine.url + encodeURIComponent(query), "_blank");
     }
   });
-
   const settingsBtn = document.getElementById("settingsBtn");
   const engineSettingsPanel = document.getElementById("engineSettings");
   const addEngineBtn = document.getElementById("addEngineBtn");
   const newEngineNameInput = document.getElementById("newEngineName");
   const newEngineUrlInput = document.getElementById("newEngineUrl");
-
   settingsBtn.addEventListener("click", () => {
     engineSettingsPanel.classList.toggle("hidden");
   });
-
   addEngineBtn.addEventListener("click", () => {
     const name = newEngineNameInput.value.trim();
     const url = newEngineUrlInput.value.trim();
@@ -202,13 +330,12 @@ const preloadedWallpapers = [
         engineSettingsPanel.classList.add("hidden");
         saveState("marq_customEngines", customEngines);
         renderEngines();
-        saveToCloud(); // Ensure the new engine is saved to the cloud
       } catch (err) {
         alert("Invalid URL");
       }
     }
   });
-
+  
   /* -------------------- Context Menu -------------------- */
   const contextMenuEl = document.getElementById("contextMenu");
   function showContextMenu(e, type, index, item, parentId = null) {
@@ -495,19 +622,19 @@ function renderBookmarks() {
   /* -------------------- Firebase Integration for Sync and Authentication -------------------- */
   
   // Firebase Configuration (replace with your actual config)
-  const firebaseConfig = {
-    apiKey: "AIzaSyBQDnT-C5dYL3abyWUqxvSRBneb7wnANlU",
-    authDomain: "marq-bookmark-manager.firebaseapp.com",
-    projectId: "marq-bookmark-manager",
-    storageBucket: "marq-bookmark-manager.firebasestorage.app",
-    messagingSenderId: "558718436878",
-    appId: "1:558718436878:web:a4324c4e81ee0bfea55e5f",
-    measurementId: "G-LQ9P67E5GV"
-  };
+  // const firebaseConfig = {
+  //   apiKey: "AIzaSyBQDnT-C5dYL3abyWUqxvSRBneb7wnANlU",
+  //   authDomain: "marq-bookmark-manager.firebaseapp.com",
+  //   projectId: "marq-bookmark-manager",
+  //   storageBucket: "marq-bookmark-manager.firebasestorage.app",
+  //   messagingSenderId: "558718436878",
+  //   appId: "1:558718436878:web:a4324c4e81ee0bfea55e5f",
+  //   measurementId: "G-LQ9P67E5GV"
+  // };
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
+  // firebase.initializeApp(firebaseConfig);
+  // const auth = firebase.auth();
+  // const db = firebase.firestore();
   
   firebase.auth().onAuthStateChanged(user => {
     const bar = document.getElementById('bar');
@@ -581,7 +708,7 @@ userIcon.addEventListener("click", () => {
         }
     }
 });
-
+ 
 function showLoginOptions() {
     loginModal = document.createElement("div");
     loginModal.id = "loginModal";
