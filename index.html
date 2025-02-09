@@ -3,15 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Marq - Bookmark Manager</title>
+  <title>Marq</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="q.png" type="image/x-icon">
+<link rel="manifest" href="site.webmanifest">
+<link rel="icon" href="q.ico" type="image/x-icon">
+
+  <!-- Firebase SDK (using compat libraries) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body> 
-<div>
-  <div id="bar">Hey, Let's Explore..</div>
-  <div id="logo"><img src="Mar.png" alt="logo" title="Welcome to MarQ"></div>
-</div>
+
+    <div id="bar">Hey, Let's Explore..</div>
+
   <!-- Digital Clock -->
   <div id="clock" class="clock"></div>
 
@@ -19,7 +24,7 @@
   <div class="search-container">
     <div class="search-bar">
       <input type="text" id="query" placeholder="Search or type URL..." />
-      <button id="searchBtn">🔍</button>
+      <button id="searchBtn"><img src="search.png" alt="search" width="16px" height="16px"></button>
     </div>
     <div class="engine-settings-row">
       <div class="engine-container">
@@ -34,32 +39,91 @@
     </div>
   </div>
 
-  <!-- Folder Tabs -->
-  <div class="tab-container">
-    <div id="tabs">
-      <!-- Folder tabs will be rendered here -->
-    </div>
-    <button id="addTabBtn" class="add-tab-btn" title="Add new folder">➕</button>
-  </div>
-  <div id="newFolderContainer" class="new-folder-container hidden">
-    <input type="text" id="newFolderName" placeholder="Folder Name" />
-    <button id="createFolderBtn">Create Folder</button>
-    <button id="cancelFolderBtn">Cancel</button>
-  </div>
 
-  <!-- Bookmark/Workspace Content Area -->
-  <div id="bookmarkContent" class="bookmark-content">
-    <!-- Bookmarks or Tools (if Tools tab is active) will be rendered here -->
-  </div>
+<!-- Toggle Button -->
+     <label class="switch" title="Toggle Tabs">
+         <input type="checkbox" id="toggleTabsCheckbox" class="toggle-tabs-checkbox">
+         <span class="slider"></span>
+    </label>
+
+  <!-- Folder Tabs -->
+  <details class="dropdown" open>
+    <summary class="hide"></summary>
+    <div class="tab-container">
+      <div id="tabs">
+        <!-- Folder tabs will be rendered here -->
+      </div>
+      <button id="addTabBtn" class="add-tab-btn" title="Add new folder">➕</button>
+    </div>
+    
+    <div id="newFolderContainer" class="new-folder-container hidden">
+      <input type="text" id="newFolderName" placeholder="Folder Name" />
+      <button id="createFolderBtn">Create Folder</button>
+      <button id="cancelFolderBtn">Cancel</button>
+    </div>
+    
+    <!-- Bookmark/Workspace Content Area -->
+    <div id="bookmarkContent" class="bookmark-content">
+      <!-- Bookmarks or Tools (if Tools tab is active) will be rendered here -->
+    </div>
+  </details>
 
   <!-- Wallpaper Change Button & Hidden File Input -->
-  <button id="changeWallpaperBtn" class="wallpaper-btn" title="Click to change wallpaper">🧱</button>
+  <button id="changeWallpaperBtn" class="wallpaper-btn" title="Click to change wallpaper">🎨</button>
   <input type="file" id="wallpaperInput" accept="image/*" class="hidden">
-
 
   <!-- Context Menu -->
   <div id="contextMenu" class="context-menu hidden"></div>
 
+  <!-- The user icon (for login) will be created dynamically via script.js -->
+
+  <!-- Feature Modal Trigger -->
+<button id="openFeatureModal" class="feature-btn"><img src="Mar.png" alt="marq" width="60px" height="60px"></button>
+
+<!-- Feature Modal -->
+<div id="featureModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>✨ Welcome to Marq!</h2>
+        <p style="font-size: 0.9rem; margin-top: 10px;">A smart & sleek bookmark manager that enhances your browsing experience.</p>
+
+        <div class="feature-grid">
+            <div class="feature">
+                <h3>🔖 Bookmark Manager</h3>
+                <p>Organize your favorite websites in folders with quick access.</p>
+            </div>
+            <div class="feature">
+                <h3>🔍 Marq Search</h3>
+                <p>Use multiple search engines & customize them to your needs.</p>
+            </div>
+            <div class="feature">
+                <h3>🔨 Productivity Tools</h3>
+                <p>To-Do List and Pomodoro Timer for maximum efficiency.</p>
+            </div>
+            <div class="feature">
+                <h3>🎨 Dynamic Themes</h3>
+                <p>Choose from preloaded, uploaded, or random Themes.</p>
+            </div>
+            <div class="feature">
+                <h3>🔄 Sync & Login</h3>
+                <p>Login to sync your bookmarks and settings across devices.</p>
+            </div>
+            <div class="feature">
+                <h3>Much More..</h3>
+                <p>More features coming soon..</p>
+            </div>
+        </div>
+
+        <div class="cta">
+            <button id="closeFeatureModal" class="start-btn">🚀 Get Started</button>
+        </div>
+    </div>
+</div>
+
+
   <script src="script.js"></script>
+  <!-- <div id="logo">
+    <img src="Mar.png" alt="logo" title="Welcome to MarQ">
+  </div> -->
 </body>
 </html>
