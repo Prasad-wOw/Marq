@@ -142,6 +142,7 @@ const preloadedWallpapers = [
   ];
   let customEngines = loadState("marq_customEngines", []);
   let selectedEngine = defaultEngines[0];
+
   function renderEngines() {
     const container = document.querySelector(".engine-container");
     container.innerHTML = "";
@@ -164,25 +165,31 @@ const preloadedWallpapers = [
       container.appendChild(btn);
     });
   }
+
   renderEngines();
+
   document.getElementById("searchBtn").addEventListener("click", () => {
     const query = document.getElementById("query").value;
     if (query) window.open(selectedEngine.url + encodeURIComponent(query), "_blank");
   });
+
   document.getElementById("query").addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       const query = document.getElementById("query").value;
       if (query) window.open(selectedEngine.url + encodeURIComponent(query), "_blank");
     }
   });
+
   const settingsBtn = document.getElementById("settingsBtn");
   const engineSettingsPanel = document.getElementById("engineSettings");
   const addEngineBtn = document.getElementById("addEngineBtn");
   const newEngineNameInput = document.getElementById("newEngineName");
   const newEngineUrlInput = document.getElementById("newEngineUrl");
+
   settingsBtn.addEventListener("click", () => {
     engineSettingsPanel.classList.toggle("hidden");
   });
+
   addEngineBtn.addEventListener("click", () => {
     const name = newEngineNameInput.value.trim();
     const url = newEngineUrlInput.value.trim();
@@ -195,6 +202,7 @@ const preloadedWallpapers = [
         engineSettingsPanel.classList.add("hidden");
         saveState("marq_customEngines", customEngines);
         renderEngines();
+        saveToCloud(); // Ensure the new engine is saved to the cloud
       } catch (err) {
         alert("Invalid URL");
       }
