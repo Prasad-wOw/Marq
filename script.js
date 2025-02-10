@@ -270,28 +270,31 @@ const preloadedWallpapers = [
   ];
   let customEngines = loadState("marq_customEngines", []);
   let selectedEngine = defaultEngines[0];
+
   function renderEngines() {
-    const container = document.querySelector(".engine-container");
-    container.innerHTML = "";
-    const allEngines = [...defaultEngines, ...customEngines];
-    allEngines.forEach((engine) => {
-      const btn = document.createElement("button");
-      btn.className = "engine-btn";
-      if (engine.url === selectedEngine.url) btn.classList.add("selected");
-      btn.innerHTML = `<img src="${engine.icon}" alt="${engine.name}"><span>${engine.name}</span>`;
-      btn.onclick = () => {
-        selectedEngine = engine;
-        renderEngines();
-      };
-      btn.oncontextmenu = (e) => {
-        e.preventDefault();
-        if (allEngines.indexOf(engine) >= defaultEngines.length) {
-          showContextMenu(e, "engine", customEngines.indexOf(engine), engine);
-        }
-      };
-      container.appendChild(btn);
-    });
-  }
+  const container = document.querySelector(".engine-container");
+  container.innerHTML = "";
+  const allEngines = [...defaultEngines, ...customEngines];
+  allEngines.forEach((engine) => {
+    const btn = document.createElement("button");
+    btn.className = "engine-btn";
+    if (engine.url === selectedEngine.url) btn.classList.add("selected");
+    btn.innerHTML = `<img src="${engine.icon}" alt="${engine.name}"><span>${engine.name}</span>`;
+    btn.onclick = () => {
+      selectedEngine = engine;
+      renderEngines();
+    };
+    btn.oncontextmenu = (e) => {
+      e.preventDefault();
+      if (allEngines.indexOf(engine) >= defaultEngines.length) {
+        showContextMenu(e, "engine", customEngines.indexOf(engine), engine);
+      }
+    };
+    container.appendChild(btn);
+  });
+}
+
+
   renderEngines();
   document.getElementById("searchBtn").addEventListener("click", () => {
     const query = document.getElementById("query").value;
@@ -632,22 +635,22 @@ function renderBookmarks() {
 });
   /* ----- Function to Reset the UI to Default State on Logout ----- */
   function resetToDefault() {
-      // Clear localStorage so no previous user data lingers
-      localStorage.removeItem("marq_folders");
-      localStorage.removeItem("marq_activeFolderId");
-      localStorage.removeItem("marq_customEngines");
-      // Reset in-memory variables to default values
-      folders = [
-        { id: 1, name: "Home", bookmarks: [] },
-        { id: 2, name: "Work", bookmarks: [] },
-        { id: 3, name: "Tools", bookmarks: [] }
-      ];
-      activeFolderId = 1;
-      customEngines = [];
-      // Re-render UI
-      renderTabs();
-      renderBookmarks();
-      renderEngines();
+    // Clear localStorage so no previous user data lingers
+    localStorage.removeItem("marq_folders");
+    localStorage.removeItem("marq_activeFolderId");
+    localStorage.removeItem("marq_customEngines");
+    // Reset in-memory variables to default values
+    folders = [
+      { id: 1, name: "Home", bookmarks: [] },
+      { id: 2, name: "Work", bookmarks: [] },
+      { id: 3, name: "Tools", bookmarks: [] }
+    ];
+    activeFolderId = 1;
+    customEngines = [];
+    // Re-render UI
+    renderTabs();
+    renderBookmarks();
+    renderEngines();
   }
   
   /* ----- User Icon Creation & Authentication Handling ----- */
@@ -814,59 +817,64 @@ function showUserProfile() {
     }
 }
   
-  function syncUserData(user) {
-      const userRef = db.collection("users").doc(user.uid);
-      userRef.get().then(doc => {
-          if (doc.exists) {
-              // Load synced data (expected structure: { folders, searchEngines })
-              const data = doc.data();
-              if (data.folders) { 
-                folders = data.folders; 
-                renderTabs(); 
-                renderBookmarks(); 
-              }
-              if (data.searchEngines) { 
-                customEngines = data.searchEngines; 
-                renderEngines(); 
-              }
-          } else {
-              userRef.set({
-                  folders: folders,
-                  searchEngines: customEngines
-              });
-          }
-      }).catch(err => console.error(err));
-  }
-  
-  function saveToCloud() {
-      const user = firebase.auth().currentUser;
-      if (user) {
-          const userRef = db.collection("users").doc(user.uid);
-          userRef.update({
-              folders: folders,
-              searchEngines: customEngines
-          }).catch(err => console.error(err));
+function syncUserData(user) {
+  const userRef = db.collection("users").doc(user.uid);
+  userRef.get().then(doc => {
+    if (doc.exists) {
+      // Load synced data (expected structure: { folders, searchEngines })
+      const data = doc.data();
+      if (data.folders) { 
+        folders = data.folders; 
+        renderTabs(); 
+        renderBookmarks(); 
       }
+      if (data.searchEngines) { 
+        customEngines = data.searchEngines; 
+        renderEngines(); 
+      }
+      if (data.todoTasks) {
+        window.todoTasks = data.todoTasks;
+        renderTodoList();
+      }
+    } else {
+      userRef.set({
+        folders: folders,
+        searchEngines: customEngines,
+        todoTasks: window.todoTasks
+      });
+    }
+  }).catch(err => console.error(err));
+}
+  
+function saveToCloud() {
+  const user = firebase.auth().currentUser;
+  if (user) {
+    const userRef = db.collection("users").doc(user.uid);
+    userRef.update({
+      folders: folders,
+      searchEngines: customEngines,
+      todoTasks: window.todoTasks
+    }).catch(err => console.error(err));
   }
+}
   // Enhance saveState to also update the cloud data
   const originalSaveState = saveState;
   window.saveState = function(key, data) {
-      originalSaveState(key, data);
-      saveToCloud();
+    originalSaveState(key, data);
+    saveToCloud();
   };
   
   // Listen for auth state changes to update the UI accordingly
   firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-          syncUserData(user);
-          userIcon.innerHTML = `<img src="${user.photoURL || 'user.svg'}" style="width:30px; height:30px; border-radius:50%">`;
-      } else {
-          // On logout, reset the UI to default state
-          resetToDefault();
-          userIcon.innerHTML = '<img src="user.svg" style="width:30px; height:30px;">';
-      }
+    if (user) {
+      syncUserData(user);
+      userIcon.innerHTML = `<img src="${user.photoURL || 'user.svg'}" style="width:30px; height:30px; border-radius:50%">`;
+    } else {
+      // On logout, reset the UI to default state
+      resetToDefault();
+      userIcon.innerHTML = '<img src="user.svg" style="width:30px; height:30px;">';
+    }
   });
-
 
 
 //   switch toggle
