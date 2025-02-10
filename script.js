@@ -1,9 +1,10 @@
-// Full Optimized script.js with Sync, Storage & UI Improvements
 
 /* -------------------- Helper Functions -------------------- */
 function saveState(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
-  saveToCloudDebounced();
+  if (key === "marq_customEngines") {
+    saveToCloudDebounced();
+  }
 }
 
 function loadState(key, defaultValue) {
@@ -82,10 +83,28 @@ function renderBookmarks() {
   const folder = userData.folders.find(f => f.id === userData.activeFolderId);
   const container = document.getElementById("bookmarkContent");
   container.innerHTML = folder ? folder.bookmarks.map(bm => `<div>${bm.name}</div>`).join('') : "";
-}
-
 function renderEngines() {
   const container = document.querySelector(".engine-container");
+  container.innerHTML = "";
+  const allEngines = [...defaultEngines, ...customEngines];
+  allEngines.forEach((engine) => {
+    const btn = document.createElement("button");
+    btn.className = "engine-btn";
+    if (engine.url === selectedEngine.url) btn.classList.add("selected");
+    btn.innerHTML = `<img src="${engine.icon}" alt="${engine.name}"><span>${engine.name}</span>`;
+    btn.onclick = () => {
+      selectedEngine = engine;
+      renderEngines();
+    };
+    btn.oncontextmenu = (e) => {
+      e.preventDefault();
+      if (allEngines.indexOf(engine) >= defaultEngines.length) {
+        showContextMenu(e, "engine", customEngines.indexOf(engine), engine);
+      }
+    };
+    container.appendChild(btn);
+  });
+}
   container.innerHTML = userData.searchEngines.map(engine => `<button>${engine.name}</button>`).join('');
 }
 
@@ -93,32 +112,6 @@ function renderTodoList() {
   const container = document.getElementById("todoItems");
   container.innerHTML = userData.todoTasks.map(task => `<li>${task.text}</li>`).join('');
 }
-
-/* -------------------- UI Features -------------------- */
-// function applyWallpaper() {
-//   if (userData.wallpaper) {
-//       document.body.style.backgroundImage = `url(${userData.wallpaper})`;
-//   }
-// }
-
-// document.getElementById("changeWallpaperBtn").addEventListener("click", () => {
-//   const url = prompt("Enter wallpaper URL:");
-//   if (url) {
-//       userData.wallpaper = url;
-//       saveState("marq_userData", userData);
-//       applyWallpaper();
-//   }
-// });
-
-// document.getElementById("addTabBtn").addEventListener("click", () => {
-//   const name = prompt("Enter folder name:");
-//   if (name) {
-//       const newFolder = { id: Date.now(), name, bookmarks: [] };
-//       userData.folders.push(newFolder);
-//       saveState("marq_userData", userData);
-//       renderTabs();
-//   }
-// });
 
 /* -------------------- Authentication Handling -------------------- */
 auth.onAuthStateChanged(user => {
@@ -359,7 +352,7 @@ const preloadedWallpapers = [
         const newUrl = prompt("Enter new engine URL:", item.url);
         if (newName && newUrl) {
           try {
-            const icon = new URL(newUrl).origin + "/favicon.ico";
+            const icon = new URL(newUrl).origin + "/favicon.ico" || "/favicon.png";
             customEngines[index] = { name: newName, url: newUrl, icon };
             saveState("marq_customEngines", customEngines);
             renderEngines();
@@ -620,21 +613,7 @@ function renderBookmarks() {
     
   
   /* -------------------- Firebase Integration for Sync and Authentication -------------------- */
-  
-  // Firebase Configuration (replace with your actual config)
-  // const firebaseConfig = {
-  //   apiKey: "AIzaSyBQDnT-C5dYL3abyWUqxvSRBneb7wnANlU",
-  //   authDomain: "marq-bookmark-manager.firebaseapp.com",
-  //   projectId: "marq-bookmark-manager",
-  //   storageBucket: "marq-bookmark-manager.firebasestorage.app",
-  //   messagingSenderId: "558718436878",
-  //   appId: "1:558718436878:web:a4324c4e81ee0bfea55e5f",
-  //   measurementId: "G-LQ9P67E5GV"
-  // };
-  // Initialize Firebase
-  // firebase.initializeApp(firebaseConfig);
-  // const auth = firebase.auth();
-  // const db = firebase.firestore();
+
   
   firebase.auth().onAuthStateChanged(user => {
     const bar = document.getElementById('bar');
@@ -681,7 +660,7 @@ function renderBookmarks() {
       userIcon.style.top = "30px";
       userIcon.style.right = "30px";
       userIcon.style.borderRadius = "20px";
-      userIcon.style.background = "rgba(242, 219, 15, 0.43)";
+      userIcon.style.background = "rgba(242, 219, 15, 0)";
       userIcon.style.cursor = "pointer";
       userIcon.style.zIndex = "1000";
       document.body.appendChild(userIcon);
@@ -814,7 +793,7 @@ function showUserProfile() {
         profileModal.style.alignItems = "center";
         profileModal.style.justifyContent = "center";
         profileModal.innerHTML = `
-                <div style="background:rgba(81, 81, 81, 0.93); padding:20px; border-radius:5px; text-align:center; min-width:300px;">
+                <div style="background:rgba(31, 30, 30, 0.93); padding:20px; border-radius:5px; text-align:center; min-width:300px; ">
                     <img src="${user.photoURL || 'user.svg'}" style="width:80px; height:80px; border-radius:50%;">
                     <h2 style="margin-bottom:40px; margin-top:20px">${user.displayName || user.email}</h2>
                     <button id="logoutBtn">Logout</button>
