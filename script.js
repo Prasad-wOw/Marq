@@ -267,7 +267,11 @@ const preloadedWallpapers = [
     { name: "Google", url: "https://www.google.com/search?q=", icon: "https://www.google.com/favicon.ico" },
     { name: "Bing", url: "https://www.bing.com/search?q=", icon: "https://www.bing.com/favicon.ico" },
     { name: "Wiki", url: "https://en.wikipedia.org/wiki/", icon: "https://en.wikipedia.org/favicon.ico" },
-    { name: "YouTube", url: "https://www.youtube.com/results?search_query=", icon: "https://www.youtube.com/favicon.ico" }
+    { name: "YouTube", url: "https://www.youtube.com/results?search_query=", icon: "https://www.youtube.com/favicon.ico" },
+    { name: "Amazon", url: "https://www.amazon.in/s?k=", icon: "https://www.amazon.in/favicon.ico" },
+    { name: "Z-Lib", url: "https://z-library.sk/s/", icon: "https://z-library.sk/favicon.ico" },
+    { name: "IMDb", url: "https://imdb.com/find?s=all&q=", icon: "https://imdb.com/favicon.ico" },
+    { name: "Maps", url: "http://maps.google.com/?q=", icon: "https://maps.google.com/favicon.ico" },
   ];
   let customEngines = loadState("marq_customEngines", []);
   let selectedEngine = defaultEngines[0];
