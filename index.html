@@ -1,129 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Marq</title>
-  <link rel="stylesheet" href="style.css">
-<link rel="manifest" href="site.webmanifest">
-<link rel="icon" href="q.ico" type="image/x-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Marq.</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="Images/q.png" type="image/x-icon" />
+    <!-- Clock Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sixtyfour+Convergence&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="bar" class="message glass">Hey, Let's Explore..</div>
 
-  <!-- Firebase SDK (using compat libraries) -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-</head>
-<body> 
+    <div class="all-apps-container">
+      <button id="allAppsBtn" class="all-apps-btn" title="All Apps">
+        <img src="Images/apps.png" alt="All Apps" class="all-apps-icon" />
+      </button>
 
-    <div id="bar">Hey, Let's Explore..</div>
+      <div id="allAppsMenu" class="all-apps-menu hidden">
+        <div class="app-item">
+          <a href="https://mail.google.com" target="_blank">
+            <img src="Images/gmail.png" alt="Gmail" class="app-icon" />
+            <span>Gmail</span>
+          </a>
+        </div>
 
-  <!-- Digital Clock -->
-  <div id="clock" class="clock"></div>
+        <div class="app-item">
+          <a href="https://www.youtube.com/" target="_blank">
+            <img src="Images/youtube.png" alt="YouTube" class="app-icon" />
+            <span>YouTube</span>
+          </a>
+        </div>
 
-  <!-- Search Section -->
-  <div class="search-container">
-    <div class="search-bar">
-      <input type="text" id="query" placeholder="Search or type URL..." />
-      <button id="searchBtn"><img src="search.png" alt="search" width="16px" height="16px"></button>
-    </div>
-    <div class="engine-settings-row">
-      <div class="engine-container">
-        <!-- Search engines will be rendered here -->
+        <div class="app-item">
+          <a href="https://chatgpt.com/" target="_blank">
+            <img src="Images/chatgpt.png" alt="ChatGpt" class="app-icon" />
+            <span>ChaGpt</span>
+          </a>
+        </div>
+
+        <div class="app-item">
+          <a href="https://docs.google.com/document/u/0/" target="_blank">
+            <img
+              src="Images/google-docs.png"
+              alt="Google Docs"
+              class="app-icon"
+            />
+            <span>Google Docs</span>
+          </a>
+        </div>
+
+        <div class="app-item">
+          <a href="https://m365.cloud.microsoft/?auth=1" target="_blank">
+            <img
+              src="Images/microsoft.png"
+              alt="Microsoft 365"
+              class="app-icon"
+            />
+            <span>Microsoft 365</span>
+          </a>
+        </div>
+
+        <div class="app-item">
+          <a href="https://docs.google.com/forms/u/0/" target="_blank">
+            <img
+              src="Images/forms.png"
+              alt="Google Forms"
+              class="app-icon"
+            />
+            <span>Google Forms</span>
+          </a>
+        </div>
+
+        <div class="app-item">
+          <a href="https://web.whatsapp.com/" target="_blank">
+            <img src="Images/whatsapp.png" alt="Whatsapp" class="app-icon" />
+            <span>Whatsapp</span>
+          </a>
+        </div>
+
+        <div class="app-item">
+          <a
+            href="https://www.instagram.com/"
+            target="_blank"
+          >
+            <img
+              src="Images/instagram.png"
+              alt="instagram"
+              class="app-icon"
+            />
+            <span>instagram</span>
+          </a>
+        </div>
+
+        <div class="app-item">
+          <a href="https://x.com/?lang=en" target="_blank">
+            <img
+              src="Images/twitter.png"
+              alt="X"
+              class="app-icon"
+            />
+            <span> X(Twitter) </span>
+          </a>
+        </div>
+
+        <div class="app-item">
+          <a href="https://drive.google.com/drive/u/0/my-drive" target="_blank">
+            <img
+              src="Images/google-drive.png"
+              alt="Google Drive"
+              class="app-icon"
+            />
+            <span>Google Drive</span>
+          </a>
+        </div>
+
+        
+        <div class="app-item">
+          <a href="https://www.canva.com/" target="_blank">
+            <img
+            src="Images/canva.png"
+            alt="Canva"
+            class="app-icon"
+            />
+            <span>Canva</span>
+          </a>
+        </div>
+        
+        <div class="app-item">
+          <a href="https://calendar.google.com/calendar/u/0/r" target="_blank">
+            <img
+              src="Images/google-calendar.png"
+              alt="Google Calendar"
+              class="app-icon"
+            />
+            <span>Google Calendar</span>
+          </a>
+        </div>
       </div>
-      <button id="settingsBtn" class="settings-btn" title="Manage search engines">⚙️</button>
     </div>
-    <div id="engineSettings" class="engine-settings hidden">
-      <input type="text" id="newEngineName" placeholder="Engine Name" />
-      <input type="text" id="newEngineUrl" placeholder="Engine URL (use {query})" />
-      <button id="addEngineBtn">Add Engine</button>
+
+    <!-- Digital Clock -->
+    <div id="clock" class="clock"></div>
+
+    <!-- Search Section -->
+    <div class="search-container">
+      <div class="search-bar">
+        <input type="text" id="query" placeholder="Search or type URL..." />
+        <button id="searchBtn">🔍</button>
+      </div>
+      <div class="engine-settings-row">
+        <div class="engine-container">
+          <!-- Search engines will be rendered here -->
+        </div>
+        <button
+          id="settingsBtn"
+          class="settings-btn"
+          title="Manage search engines"
+        >
+          ⚙️
+        </button>
+      </div>
+      <div id="engineSettings" class="engine-settings hidden">
+        <input type="text" id="newEngineName" placeholder="Engine Name" />
+        <input
+          type="text"
+          id="newEngineUrl"
+          placeholder="Engine URL (use {query})"
+        />
+        <button id="addEngineBtn">Add Engine</button>
+      </div>
     </div>
-  </div>
 
-
-<!-- Toggle Button -->
-     <label class="switch" title="Toggle Tabs">
-         <input type="checkbox" id="toggleTabsCheckbox" class="toggle-tabs-checkbox">
-         <span class="slider"></span>
+    <!-- Toggle Button -->
+    <label class="switch" title="Toggle Tabs">
+      <input
+        type="checkbox"
+        id="toggleTabsCheckbox"
+        class="toggle-tabs-checkbox"
+      />
+      <span class="slider"></span>
     </label>
 
-  <!-- Folder Tabs -->
-  <details class="dropdown" open>
-    <summary class="hide"></summary>
-    <div class="tab-container">
-      <div id="tabs">
-        <!-- Folder tabs will be rendered here -->
+    <!-- Folder Tabs -->
+    <details class="dropdown" open>
+      <summary class="hide"></summary>
+      <div class="tab-container">
+        <div id="tabs">
+          <!-- Folder tabs will be rendered here -->
+        </div>
+        <button id="addTabBtn" class="add-tab-btn" title="Add new folder">
+            <img src="Images/add-btn.png" alt="add-icon" style="width: 16px; height: 16px; ">
+        </button>
       </div>
-      <button id="addTabBtn" class="add-tab-btn" title="Add new folder">➕</button>
+
+      <div id="newFolderContainer" class="new-folder-container hidden">
+        <input type="text" id="newFolderName" placeholder="Folder Name" />
+        <button id="createFolderBtn">Create Folder</button>
+      </div>
+
+      <!-- Bookmark/Workspace Content Area -->
+      <div id="bookmarkContent" class="bookmark-content">
+        <!-- Bookmarks or Tools (if Tools tab is active) will be rendered here -->
+      </div>
+    </details>
+
+    <div>
+      <!-- Wallpaper Change Button & Hidden File Input -->
+      <button
+        id="changeWallpaperBtn"
+        class="wallpaper-btn"
+        title="Click to change wallpaper"
+      >
+        🎨
+      </button>
+      <input type="file" id="wallpaperInput" accept="image/*" class="hidden" />
     </div>
-    
-    <div id="newFolderContainer" class="new-folder-container hidden">
-      <input type="text" id="newFolderName" placeholder="Folder Name" />
-      <button id="createFolderBtn">Create Folder</button>
-      <button id="cancelFolderBtn">Cancel</button>
+
+    <!-- Context Menu -->
+    <div id="contextMenu" class="context-menu hidden"></div>
+
+    <!-- The user icon (for login) will be created dynamically via script.js -->
+    <div>
+      <a href="about.html">
+        <img src="Images/Mar.png" alt="about" class="about" />
+      </a>
     </div>
-    
-    <!-- Bookmark/Workspace Content Area -->
-    <div id="bookmarkContent" class="bookmark-content">
-      <!-- Bookmarks or Tools (if Tools tab is active) will be rendered here -->
-    </div>
-  </details>
 
-  <!-- Wallpaper Change Button & Hidden File Input -->
-  <button id="changeWallpaperBtn" class="wallpaper-btn" title="Click to change wallpaper">🎨</button>
-  <input type="file" id="wallpaperInput" accept="image/*" class="hidden">
-
-  <!-- Context Menu -->
-  <div id="contextMenu" class="context-menu hidden"></div>
-
-  <!-- The user icon (for login) will be created dynamically via script.js -->
-
-  <!-- Feature Modal Trigger -->
-<button id="openFeatureModal" class="feature-btn"><img src="Mar.png" alt="marq" width="60px" height="60px"></button>
-
-<!-- Feature Modal -->
-<div id="featureModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2>✨ Welcome to Marq!</h2>
-        <p style="font-size: 0.9rem; margin-top: 10px;">A smart & sleek bookmark manager that enhances your browsing experience.</p>
-
-        <div class="feature-grid">
-            <div class="feature">
-                <h3>🔖 Bookmark Manager</h3>
-                <p>Organize your favorite websites in folders with quick access.</p>
-            </div>
-            <div class="feature">
-                <h3>🔍 Marq Search</h3>
-                <p>Use multiple search engines & customize them to your needs.</p>
-            </div>
-            <div class="feature">
-                <h3>🔨 Productivity Tools</h3>
-                <p>To-Do List and Pomodoro Timer for maximum efficiency.</p>
-            </div>
-            <div class="feature">
-                <h3>🎨 Dynamic Themes</h3>
-                <p>Choose from preloaded, uploaded, or random Themes.</p>
-            </div>
-            <div class="feature">
-                <h3>🔄 Sync & Login</h3>
-                <p>Login to sync your bookmarks and settings across devices.</p>
-            </div>
-            <div class="feature">
-                <h3>Much More..</h3>
-                <p>More features coming soon..</p>
-            </div>
-        </div>
-
-        <div class="cta">
-            <button id="closeFeatureModal" class="start-btn">🚀 Get Started</button>
-        </div>
-    </div>
-</div>
-
-
-  <script src="script.js"></script>
-  <!-- <div id="logo">
-    <img src="Mar.png" alt="logo" title="Welcome to MarQ">
-  </div> -->
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Marq</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: url("Images/wallpaper5.jpg") no-repeat center center/cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .about-container {
+        background: rgba(37, 37, 37, 0.658);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 5px yellow;
+        text-align: center;
+        color: white;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+      }
+      .feature-card {
+        background: #8103c1;
+        padding: 15px;
+        border-radius: 8px;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 5px 10px rgb(255, 196, 0);
+      }
+      .back-btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #ff4081;
+        color: white;
+        border: none;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .back-btn:hover {
+        font-size: 15px;
+      }
+
+      .logo {
+        width: 200px;
+        height: 200px;
+        margin: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="Images/Mar.png" alt="logo" class="logo" />
+    <div class="about-container">
+      <h1>✨ Welcome to Marq! ✨</h1>
+      <p>
+        A smart & sleek bookmark manager that enhances your browsing experience.
+      </p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>📌 Bookmark Manager</h3>
+          <p>Organize your favorite websites in folders with quick access.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🔍 Marq Search</h3>
+          <p>Use multiple search engines & customize them to your needs.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎨 Dynamic Themes</h3>
+          <p>Personalize Marq with wallpapers of your choice.</p>
+        </div>
+        <div class="feature-card">
+          <h3>⏳ Productivity Tools <span>(coming soon..)</span></h3>
+          <p>To-Do List and Pomodoro Timer for maximum efficiency.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🔄 Sync & Login <span>(coming soon..)</span></h3>
+          <p>Login to sync your bookmarks and settings across devices.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🚀 Much More..</h3>
+          <p>More features coming soon.. Stay tuned!</p>
+        </div>
+      </div>
+
+      <a href="index.html"><button class="back-btn">Back to Marq</button></a>
+    </div>
+    <img src="Images/Mar.png" alt="logo" class="logo" />
+  </body>
+</html>

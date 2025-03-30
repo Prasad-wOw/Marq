@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "Marq",
+    "version": "1.0",
+    "description": "A bookmark manager extension.",
+    "icons": {
+      "16": "Images/q.png",
+      "48": "Images/q.png",
+      "128": "Images/q.png"
+    },
+    "action": {
+      "default_popup": "index.html",
+      "default_icon": {
+        "16": "Images/q.png",
+        "48": "Images/q.png",
+        "128": "Images/q.png"
+      }
+    },
+    "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+    "permissions": [
+      "storage",
+      "activeTab"
+    ]
+  }
