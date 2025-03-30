@@ -148,11 +148,11 @@ function saveState(key, data) {
   /* -------------------- Wallpaper (Custom Upload) -------------------- */
   // Preloaded wallpapers (assumed to be in the parent folder)
 const preloadedWallpapers = [
-    'Images/wall1.jpg',
-    'Images/wall2.jpg',
-    'Images/wall3.jpg',
-    'Images/wall4.jpg',
-    'Images/wall5.jpg'
+    'wallpaper1.jpg',
+    'wallpaper2.jpg',
+    'wallpaper3.jpg',
+    'wallpaper4.jpg',
+    'wallpaper5.jpg'
   ];
   const wallpaperInput = document.getElementById("wallpaperInput");
   function showWallpaperOptions() {
@@ -519,7 +519,7 @@ function renderBookmarks() {
       // Fallback: if the favicon fails to load, use an inline SVG star icon.
       img.onerror = function() {
         this.onerror = null; // Prevent infinite loop if fallback fails.
-        this.src = "Images/q.png"
+        this.src = "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20576%20512%27%3E%3Cpath%20fill=%27%23FFC107%27%20d=%27M287.9%2017.8L354%20150.2l145.3%2021.3c26.2%203.8%2036.7%2036%2017.7%2054.6L423%20319.3l29.2%20170.6c4.5%2026.2-23.1%2046-46.4%2033.7L288%20439.6%20270.2%20523.6c-7.6%2026.3-39.6%2029.6-46.4%203.7L205%20319.3%2080%20254.7c-19-18.7-8.5-50.8%2017.7-54.6l145.3-21.3L287.9%2017.8z%27%3E%3C/path%3E%3C/svg%3E";
       };
   
       // Create a span for the bookmark name.
@@ -553,8 +553,8 @@ function renderBookmarks() {
   
     // Create and append the "Add Bookmark" button.
     const addBtn = document.createElement('button');
-    addBtn.className = 'add-bookmark-btn';
-    addBtn.innerHTML = `<span style="font-size:1.1rem;">➕</span>`;
+    addBtn.className = 'bookmark-item add-bookmark';
+    addBtn.innerHTML = `<span style="font-size:1.8rem;">➕</span><span>Add</span>`;
     addBtn.onclick = showBookmarkPopup;
     bookmarkContentEl.appendChild(addBtn);
   
@@ -662,8 +662,8 @@ function renderBookmarks() {
       userIcon.id = "userIcon";
       userIcon.innerHTML = "<img src='user.svg' style='width:30px; height:30px;'>";
       userIcon.style.position = "fixed";
-      userIcon.style.top = "10px";
-      userIcon.style.right = "10px";
+      userIcon.style.top = "30px";
+      userIcon.style.right = "30px";
       userIcon.style.borderRadius = "20px";
       userIcon.style.background = "rgba(242, 219, 15, 0)";
       userIcon.style.cursor = "pointer";
@@ -864,11 +864,11 @@ function showUserProfile() {
   firebase.auth().onAuthStateChanged(user => {
       if (user) {
           syncUserData(user);
-          userIcon.innerHTML = `<img src="${user.photoURL || 'Images/user.svg'}" style="width:30px; height:30px; border-radius:50%">`;
+          userIcon.innerHTML = `<img src="${user.photoURL || 'user.svg'}" style="width:30px; height:30px; border-radius:50%">`;
       } else {
           // On logout, reset the UI to default state
           resetToDefault();
-          userIcon.innerHTML = '<img src="Images/user.svg" style="width:30px; height:30px; background-color: pink; border-radius:50%">';
+          userIcon.innerHTML = '<img src="user.svg" style="width:30px; height:30px;">';
       }
   });
 
@@ -1009,13 +1009,13 @@ function initPomodoroTimer() {
 
             const overlayTimerDisplay = document.createElement("p");
             overlayTimerDisplay.id = "overlayPomodoroTime";
-            overlayTimerDisplay.style.fontSize = "8rem";
+            overlayTimerDisplay.style.fontSize = "5rem";
             overlayTimerDisplay.style.color = "#fff";
             overlay.appendChild(overlayTimerDisplay);
 
             const overlayResetBtn = document.createElement("button");
             overlayResetBtn.id = "overlayResetPomodoro";
-            overlayResetBtn.textContent = "I'm Done!";
+            overlayResetBtn.textContent = "I'm OUT";
             overlayResetBtn.style.color = "red";
             overlayResetBtn.style.fontSize = "1.1rem";
             overlayResetBtn.style.fontWeight = "bold";
